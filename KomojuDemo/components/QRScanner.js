@@ -1,6 +1,12 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, View, Linking} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {RNCamera} from 'react-native-camera';
+
+const QRCodeLinksToKomojuPayments = barcodeData => {
+  const expression = new RegExp('https://komoju.com/s/p/.+');
+
+  return expression.test(barcodeData);
+};
 
 class QRScanner extends PureComponent {
   render() {
@@ -20,8 +26,13 @@ class QRScanner extends PureComponent {
           }}
           captureAudio={false}
           onBarCodeRead={barcode => {
-            console.log('barcode URL:', barcode.data);
-            Linking.openURL(barcode.data);
+            if (QRCodeLinksToKomojuPayments(barcode.data)) {
+              this.props.navigation.navigate('PaymentProcessor', {
+                url: barcode.data,
+              });
+            } else {
+              // TODO: Add proper error handling here
+            }
           }}
           barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
         />

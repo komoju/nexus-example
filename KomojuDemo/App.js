@@ -13,6 +13,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import QRScanner from './components/QRScanner';
 import Home from './components/Home';
+import PaymentProcessor from './components/PaymentProcessor';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ const App = () => {
           component={QRScanner}
           options={{title: 'Scan Komoju QR Code'}}
         />
+        <Stack.Screen name="PaymentProcessor" component={PaymentProcessor} />
       </Stack.Navigator>
     </NavigationContainer>
   );
