@@ -5,18 +5,28 @@
  * @format
  */
 
+import 'react-native-gesture-handler';
+
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-import QRScanner from './QRScanner';
+import QRScanner from './components/QRScanner';
+import Home from './components/Home';
+
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <>
-      <QRScanner />
-    </>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Welcome" component={Home} />
+        <Stack.Screen name="Scanner" component={QRScanner} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

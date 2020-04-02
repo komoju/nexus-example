@@ -1,4 +1,3 @@
-'use strict';
 import React, {PureComponent} from 'react';
 import {StyleSheet, View, Linking} from 'react-native';
 import {RNCamera} from 'react-native-camera';
