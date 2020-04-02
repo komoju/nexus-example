@@ -21,7 +21,11 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Welcome" component={Home} />
-        <Stack.Screen name="Scanner" component={QRScanner} />
+        <Stack.Screen
+          name="Scanner"
+          component={QRScanner}
+          options={{title: 'Scan Komoju QR Code'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
