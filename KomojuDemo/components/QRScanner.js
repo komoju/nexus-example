@@ -28,7 +28,7 @@ class QRScanner extends PureComponent {
           onBarCodeRead={barcode => {
             if (QRCodeLinksToKomojuPayments(barcode.data)) {
               this.props.navigation.navigate('PaymentProcessor', {
-                url: barcode.data,
+                paymentUrl: barcode.data,
               });
             } else {
               // TODO: Add proper error handling here
