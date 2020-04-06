@@ -2,11 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {Text} from 'react-native';
 
 const PaymentProcessor = ({route}) => {
-  const {paymentUrl} = route;
+  const {paymentUrl} = route.params;
   const [isLoading, setLoadingState] = useState(false);
 
   const fetchOptions = {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({method: 'qr', provider: 'tim'}),
   };
 
