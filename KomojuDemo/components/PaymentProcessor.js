@@ -13,20 +13,22 @@ const PaymentProcessor = ({route}) => {
     body: JSON.stringify({method: 'qr', provider: 'tim'}),
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     setLoadingState(true);
-    fetch(paymentUrl, fetchOptions)
-      .then(response => {
-        console.log(response);
-        setLoadingState(false);
-        //   kick off step 4 and directly communicate with the provider
-      })
-      .catch(err => {
-        // TODO set up error handling for failed request
-        console.log('ERROR:', err);
-        setLoadingState(false);
-      });
+    try {
+      const response = await fetch(paymentUrl, fetchOptions);
+      if (response.status > 399) {
+        // show error state
+      } else {
+        // kick off step 4 and directly communicate with the provider
+      }
+    } catch (error) {
+      console.log('ERROR:', error);
+    }
+
+    setLoadingState(false);
   }, []);
+
   return <Text>Please wait while the payment is being reserved</Text>;
 };
 
