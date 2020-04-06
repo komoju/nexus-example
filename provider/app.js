@@ -39,14 +39,14 @@ app.post("/", (req, res) => {
       const pretendOrderId = uuidv4();
 
       res.setHeader("Content-Type", "application/json");
-      res
+      return res
         .status(200)
         .send(JSON.stringify({ success: true, orderId: pretendOrderId }));
     }
   }
 
   res.setHeader("Content-Type", "application/json");
-  res.status(400).send(
+  return res.status(400).send(
     JSON.stringify({
       success: false,
       error: { type: "under_maintenance", message: "still being built" }
