@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {Button} from 'react-native-elements';
+import globalStyles from './globalStyles';
 
 const Home = ({navigation}) => (
   <View style={styles.container}>
@@ -13,7 +14,7 @@ const Home = ({navigation}) => (
     <Button
       title="Scan Komoju QR Code"
       onPress={() => navigation.navigate('Scanner')}
-      buttonStyle={styles.button}
+      buttonStyle={globalStyles.button}
     />
   </View>
 );
@@ -32,12 +33,6 @@ const styles = StyleSheet.create({
   explainerText: {
     margin: '7%',
     fontSize: 20,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#e9572b',
-    padding: '5% 0%',
-    borderRadius: 5,
   },
 });
 
