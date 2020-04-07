@@ -7,14 +7,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  greeting: {
-    fontSize: 48,
-    textAlign: 'center',
-  },
-  explainerText: {
-    margin: '7%',
-    fontSize: 20,
-  },
   button: {
     alignItems: 'center',
     backgroundColor: '#e9572b',
