@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Text, Alert} from 'react-native';
+import {Text} from 'react-native';
 
-const PaymentProcessor = ({route}) => {
+const PaymentProcessor = ({navigation, route}) => {
   const {paymentUrl} = route.params;
   const [isLoading, setLoadingState] = useState(false);
 
@@ -30,46 +30,13 @@ const PaymentProcessor = ({route}) => {
         const authorizationResponseText = JSON.parse(
           json.payment.payment_details.authorization_response_text,
         );
-        console.log('******** json', json);
-        console.log('total', total);
-        console.log('currency', currency);
-        console.log('payment id', id);
-        Alert.alert(
-          'Payment Confirmation',
-          `Do you want to spend ${total} ${currency}?`,
-          [
-            {
-              text: 'Yes',
-              onPress: () => {
-                // communicate with the provider directly to capture payment
-                const capturePaymentRequestOptions = {
-                  method: 'POST',
-                  headers: {'Content-Type': 'application/json'},
-                  body: JSON.stringify({paymentId: id}),
-                };
-                fetch(
-                  `http://degicaexample.au.ngrok.io/capture_payment/${authorizationResponseText.orderId}`,
-                  capturePaymentRequestOptions,
-                )
-                  .then(response =>
-                    console.log('capture payment response: ', response),
-                  )
-                  .catch(error =>
-                    console.log('capture payment error: ', error),
-                  );
-                console.log('say yes to the payment');
-              },
-            },
-            {
-              text: 'No',
-              onPress: () => {
-                // go back to the home screen
-                console.log('noooooooooope');
-              },
-            },
-            {cancelable: false},
-          ],
-        );
+
+        navigation.navigate('PaymentConfirmation', {
+          orderId: authorizationResponseText.orderId,
+          paymentId: id,
+          total,
+          currency,
+        });
       })
       .catch(error => console.log('ERROR: ', error))
       .finally(() => setLoadingState(false));
