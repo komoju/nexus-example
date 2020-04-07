@@ -12,9 +12,9 @@ const reservePayment = (req, res) => {
     "./keys/pub.pem"
   );
 
-  if (!isRequestVerified) {
-    return res.status(401).send(JSON.stringify({ success: false }));
-  }
+  //   if (!isRequestVerified) {
+  //     return res.status(401).send(JSON.stringify({ success: false }));
+  //   }
 
   const { type, mode, payment } = req.body;
 
