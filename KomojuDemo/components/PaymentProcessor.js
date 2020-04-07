@@ -25,7 +25,7 @@ const PaymentProcessor = ({route}) => {
       })
       .then(json => {
         const {
-          payment: {total, currency},
+          payment: {total, currency, id},
         } = json;
         const authorizationResponseText = JSON.parse(
           json.payment.payment_details.authorization_response_text,
@@ -33,6 +33,7 @@ const PaymentProcessor = ({route}) => {
         console.log('******** json', json);
         console.log('total', total);
         console.log('currency', currency);
+        console.log('payment id', id);
         Alert.alert(
           'Payment Confirmation',
           `Do you want to spend ${total} ${currency}?`,
@@ -41,6 +42,21 @@ const PaymentProcessor = ({route}) => {
               text: 'Yes',
               onPress: () => {
                 // communicate with the provider directly to capture payment
+                const capturePaymentRequestOptions = {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json'},
+                  body: JSON.stringify({paymentId: id}),
+                };
+                fetch(
+                  `http://degicaexample.au.ngrok.io/capture_payment/${authorizationResponseText.orderId}`,
+                  capturePaymentRequestOptions,
+                )
+                  .then(response =>
+                    console.log('capture payment response: ', response),
+                  )
+                  .catch(error =>
+                    console.log('capture payment error: ', error),
+                  );
                 console.log('say yes to the payment');
               },
             },
