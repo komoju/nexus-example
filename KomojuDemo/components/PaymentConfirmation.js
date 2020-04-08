@@ -18,7 +18,10 @@ const PaymentConfirmation = ({navigation, route}) => {
       `http://degicaexample.au.ngrok.io/capture_payment/${orderId}`,
       capturePaymentRequestOptions,
     )
-      .then(response => console.log('capture payment response: ', response))
+      .then(response => {
+        console.log('capture payment response: ', response);
+        navigation.navigate('PaymentSuccess');
+      })
       .catch(error => console.log('capture payment error: ', error));
   };
 
@@ -28,7 +31,7 @@ const PaymentConfirmation = ({navigation, route}) => {
 
   return (
     <View style={globalStyles.container}>
-      <Text style={styles.pageHeader}>💸</Text>
+      <Text style={globalStyles.emoji}>💸</Text>
       <Text
         style={
           styles.text
@@ -59,9 +62,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     paddingBottom: 50,
-  },
-  pageHeader: {
-    fontSize: 70,
   },
   button: {
     ...globalStyles.button,

@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
     padding: '5% 0%',
     borderRadius: 5,
   },
+  emoji: {
+    fontSize: 70,
+  },
 });
 
 export default styles;

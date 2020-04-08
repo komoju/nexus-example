@@ -51,7 +51,7 @@ const PaymentProcessor = ({navigation, route}) => {
     <View style={globalStyles.container}>
       {isError ? (
         <View style={globalStyles.container}>
-          <Text style={styles.emoji}>😿</Text>
+          <Text style={globalStyles.emoji}>😿</Text>
           <Text style={styles.text}>
             It looks like something's gone wrong. Please try again. If you're
             still having a problem please raise an issue on the{' '}
@@ -82,9 +82,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     margin: '7% 0%',
-  },
-  emoji: {
-    fontSize: 70,
   },
 });
 

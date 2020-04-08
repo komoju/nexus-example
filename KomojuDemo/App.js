@@ -15,6 +15,7 @@ import QRScanner from './components/QRScanner';
 import Home from './components/Home';
 import PaymentProcessor from './components/PaymentProcessor';
 import PaymentConfirmation from './components/PaymentConfirmation';
+import PaymentSuccess from './components/PaymentSuccess';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,7 @@ const App = () => {
           component={PaymentConfirmation}
           options={{title: 'Confirm Payment', headerLeft: null}}
         />
+        <Stack.Screen name="PaymentSuccess" component={PaymentSuccess} />
       </Stack.Navigator>
     </NavigationContainer>
   );
