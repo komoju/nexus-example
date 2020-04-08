@@ -28,11 +28,15 @@ const App = () => {
           component={QRScanner}
           options={{title: 'Scan Komoju QR Code'}}
         />
-        <Stack.Screen name="PaymentProcessor" component={PaymentProcessor} />
+        <Stack.Screen
+          name="PaymentProcessor"
+          component={PaymentProcessor}
+          options={{headerLeft: null}}
+        />
         <Stack.Screen
           name="PaymentConfirmation"
           component={PaymentConfirmation}
-          options={{title: 'Confirm Payment'}}
+          options={{title: 'Confirm Payment', headerLeft: null}}
         />
       </Stack.Navigator>
     </NavigationContainer>
