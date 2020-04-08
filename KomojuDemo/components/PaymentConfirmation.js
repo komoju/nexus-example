@@ -27,7 +27,7 @@ const PaymentConfirmation = ({navigation, route}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <Text style={styles.pageHeader}>❓</Text>
       <Text
         style={
