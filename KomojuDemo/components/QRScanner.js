@@ -10,6 +10,8 @@ const QRCodeLinksToKomojuPayments = barcodeData => {
 };
 
 const QRScanner = ({navigation}) => {
+  const isFocused = useIsFocused();
+
   return (
     <View style={styles.container}>
       <RNCamera
@@ -23,7 +25,7 @@ const QRScanner = ({navigation}) => {
         }}
         captureAudio={false}
         onBarCodeRead={barcode => {
-          if (QRCodeLinksToKomojuPayments(barcode.data)) {
+          if (isFocused && QRCodeLinksToKomojuPayments(barcode.data)) {
             navigation.navigate('PaymentProcessor', {
               paymentUrl: barcode.data,
             });
