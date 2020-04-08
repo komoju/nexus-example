@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Text} from 'react-native';
+import {ActivityIndicator, Text, View, StyleSheet, Linking} from 'react-native';
+
+import globalStyles from './globalStyles';
 
 const PaymentProcessor = ({navigation, route}) => {
   const {paymentUrl} = route.params;
-  const [isLoading, setLoadingState] = useState(false);
+  const [isError, setError] = useState(false);
 
   const fetchOptions = {
     method: 'POST',
@@ -14,13 +16,14 @@ const PaymentProcessor = ({navigation, route}) => {
   };
 
   useEffect(() => {
-    setLoadingState(true);
     fetch(paymentUrl, fetchOptions)
       .then(response => {
         if (response.status < 400) {
           return response.json();
         } else {
-          // set error state
+          throw Error(
+            `bad response from Komoju, url: ${paymentUrl}, response code: ${response.status}, response body: ${response.body}`,
+          );
         }
       })
       .then(json => {
@@ -38,11 +41,51 @@ const PaymentProcessor = ({navigation, route}) => {
           currency,
         });
       })
-      .catch(error => console.log('ERROR: ', error))
-      .finally(() => setLoadingState(false));
+      .catch(error => {
+        console.log('ERROR: ', error);
+        setError(true);
+      });
   }, []);
 
-  return <Text>Please wait while the payment is being reserved</Text>;
+  return (
+    <View style={globalStyles.container}>
+      {isError ? (
+        <View style={globalStyles.container}>
+          <Text style={styles.emoji}>😿</Text>
+          <Text style={styles.text}>
+            It looks like something's gone wrong. Please try again. If you're
+            still having a problem please raise an issue on the{' '}
+            <Text
+              style={{color: 'blue'}}
+              onPress={() =>
+                Linking.openURL(
+                  'https://github.com/komoju/nexus-example/issues/new',
+                )
+              }>
+              Github repository
+            </Text>
+          </Text>
+        </View>
+      ) : (
+        <View>
+          <ActivityIndicator size="large" color="#e9572b" />
+          <Text style={styles.text}>
+            Please wait while the payment is being reserved
+          </Text>
+        </View>
+      )}
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 20,
+    margin: '7% 0%',
+  },
+  emoji: {
+    fontSize: 70,
+  },
+});
 
 export default PaymentProcessor;
