@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import {useIsFocused} from '@react-navigation/native';
