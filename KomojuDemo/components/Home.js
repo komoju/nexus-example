@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   explainerText: {
-    margin: '7%',
+    marginVertical: '7%',
+    marginHorizontal: '5%',
     fontSize: 20,
   },
 });

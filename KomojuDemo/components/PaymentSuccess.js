@@ -20,8 +20,7 @@ const PaymentSuccess = ({navigation}) => (
 const styles = StyleSheet.create({
   text: {
     fontSize: 20,
-    paddingTop: 30,
-    paddingBottom: 30,
+    paddingVertical: 30,
   },
 });
 

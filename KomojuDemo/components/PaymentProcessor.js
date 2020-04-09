@@ -81,7 +81,8 @@ const PaymentProcessor = ({navigation, route}) => {
 const styles = StyleSheet.create({
   text: {
     fontSize: 20,
-    margin: '7% 0%',
+    marginVertical: '7%',
+    marginHorizontal: '5%',
   },
 });
 

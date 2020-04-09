@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     backgroundColor: '#e9572b',
-    padding: '5% 0%',
+    paddingVertical: '5%',
+    paddingHorizontal: '3%',
     borderRadius: 5,
   },
   emoji: {
