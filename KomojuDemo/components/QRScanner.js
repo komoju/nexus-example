@@ -9,24 +9,6 @@ const QRCodeLinksToKomojuPayments = barcodeData => {
   return expression.test(barcodeData);
 };
 
-const processBarcode = barcode => {
-  if (isFocused) {
-    if (QRCodeLinksToKomojuPayments(barcode.data)) {
-      navigation.navigate('PaymentProcessor', {
-        paymentUrl: barcode.data,
-      });
-    } else {
-      updateAlertState(true);
-      !showAlert &&
-        Alert.alert(
-          'Invalid QR code',
-          'For this demo app the QR code must have been generated from "https://tim-pay.herokuapp.com/"',
-          [{text: 'OK', onPress: () => updateAlertState(false)}],
-        );
-    }
-  }
-};
-
 const QRScanner = ({navigation}) => {
   const isFocused = useIsFocused();
   const [showAlert, updateAlertState] = useState(false);
@@ -43,7 +25,23 @@ const QRScanner = ({navigation}) => {
           buttonNegative: 'Cancel',
         }}
         captureAudio={false}
-        onBarCodeRead={processBarcode}
+        onBarCodeRead={barcode => {
+          if (isFocused) {
+            if (QRCodeLinksToKomojuPayments(barcode.data)) {
+              navigation.navigate('PaymentProcessor', {
+                paymentUrl: barcode.data,
+              });
+            } else {
+              updateAlertState(true);
+              !showAlert &&
+                Alert.alert(
+                  'Invalid QR code',
+                  'For this demo app the QR code must have been generated from "https://tim-pay.herokuapp.com/"',
+                  [{text: 'OK', onPress: () => updateAlertState(false)}],
+                );
+            }
+          }
+        }}
         barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
       />
     </View>
