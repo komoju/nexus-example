@@ -69,7 +69,7 @@ const PaymentProcessor = ({navigation, route}) => {
       ) : (
         <View>
           <ActivityIndicator size="large" color="#e9572b" />
-          <Text style={styles.text}>
+          <Text style={globalStyles.text}>
             Please wait while the payment is being reserved
           </Text>
         </View>
