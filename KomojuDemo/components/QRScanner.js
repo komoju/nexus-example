@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Alert} from 'react-native';
+import {StyleSheet, View, Alert, Text} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import {useIsFocused} from '@react-navigation/native';
+
+import globalStyles from './globalStyles';
 
 const QRCodeLinksToKomojuPayments = barcodeData => {
   const expression = new RegExp('https://komoju.com/s/p/.+');
@@ -42,8 +44,21 @@ const QRScanner = ({navigation}) => {
             }
           }
         }}
-        barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-      />
+        barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}>
+        {({status}) => {
+          if (status === 'NOT_AUTHORIZED') {
+            return (
+              <View style={globalStyles.container}>
+                <Text style={globalStyles.emoji}>😿</Text>
+                <Text style={styles.text}>
+                  Sorry, but this application requires camera permissions to
+                  scan the QR code. Please grant the app camera permisisons
+                </Text>
+              </View>
+            );
+          }
+        }}
+      </RNCamera>
     </View>
   );
 };
@@ -59,6 +74,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     width: '100%',
+  },
+  text: {
+    ...globalStyles.text,
+    color: 'white',
   },
 });
 

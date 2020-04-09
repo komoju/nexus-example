@@ -17,6 +17,11 @@ const styles = StyleSheet.create({
   emoji: {
     fontSize: 70,
   },
+  text: {
+    fontSize: 20,
+    marginVertical: '7%',
+    marginHorizontal: '5%',
+  },
 });
 
 export default styles;

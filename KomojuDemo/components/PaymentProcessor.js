@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Text, View, StyleSheet, Linking} from 'react-native';
+import {ActivityIndicator, Text, View, Linking} from 'react-native';
 
 import globalStyles from './globalStyles';
 
@@ -52,7 +52,7 @@ const PaymentProcessor = ({navigation, route}) => {
       {isError ? (
         <View style={globalStyles.container}>
           <Text style={globalStyles.emoji}>😿</Text>
-          <Text style={styles.text}>
+          <Text style={globalStyles.text}>
             It looks like something's gone wrong. Please try again. If you're
             still having a problem please raise an issue on the{' '}
             <Text
@@ -77,13 +77,5 @@ const PaymentProcessor = ({navigation, route}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 20,
-    marginVertical: '7%',
-    marginHorizontal: '5%',
-  },
-});
 
 export default PaymentProcessor;
