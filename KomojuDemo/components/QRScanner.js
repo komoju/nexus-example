@@ -1,5 +1,5 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View, Alert} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import {useIsFocused} from '@react-navigation/native';
 
@@ -11,6 +11,7 @@ const QRCodeLinksToKomojuPayments = barcodeData => {
 
 const QRScanner = ({navigation}) => {
   const isFocused = useIsFocused();
+  const [showAlert, updateAlertState] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -25,12 +26,20 @@ const QRScanner = ({navigation}) => {
         }}
         captureAudio={false}
         onBarCodeRead={barcode => {
-          if (isFocused && QRCodeLinksToKomojuPayments(barcode.data)) {
-            navigation.navigate('PaymentProcessor', {
-              paymentUrl: barcode.data,
-            });
-          } else {
-            // TODO: Add proper error handling here
+          if (isFocused) {
+            if (QRCodeLinksToKomojuPayments(barcode.data)) {
+              navigation.navigate('PaymentProcessor', {
+                paymentUrl: barcode.data,
+              });
+            } else {
+              updateAlertState(true);
+              !showAlert &&
+                Alert.alert(
+                  'Invalid QR code',
+                  'For this demo app the QR code must have been generated from "https://tim-pay.herokuapp.com/"',
+                  [{text: 'OK', onPress: () => updateAlertState(false)}],
+                );
+            }
           }
         }}
         barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
