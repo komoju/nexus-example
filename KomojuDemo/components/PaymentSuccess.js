@@ -9,7 +9,7 @@ const PaymentSuccess = ({navigation}) => (
     <Text style={globalStyles.emoji}>🎉</Text>
     <Text style={styles.text}>Success! Your payment has been completed</Text>
     <Button
-      buttonStyle={globalStyles.button}
+      buttonStyle={styles.button}
       title="Finish"
       titleStyle={{fontSize: 24}}
       onPress={() => navigation.navigate('Welcome')}
@@ -19,8 +19,12 @@ const PaymentSuccess = ({navigation}) => (
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 20,
+    ...globalStyles.text,
     paddingVertical: 30,
+  },
+  button: {
+    ...globalStyles.button,
+    paddingHorizontal: '15%',
   },
 });
 

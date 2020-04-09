@@ -65,9 +65,8 @@ const styles = StyleSheet.create({
   },
   button: {
     ...globalStyles.button,
-    padding: '5%',
-    paddingLeft: '20%',
-    paddingRight: '20%',
+    marginVertical: '5%',
+    paddingHorizontal: '20%',
   },
 });
 

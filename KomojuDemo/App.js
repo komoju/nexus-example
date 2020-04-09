@@ -73,7 +73,11 @@ const App = () => {
           component={PaymentConfirmation}
           options={{title: 'Confirm Payment', headerLeft: null}}
         />
-        <Stack.Screen name="PaymentSuccess" component={PaymentSuccess} />
+        <Stack.Screen
+          name="PaymentSuccess"
+          component={PaymentSuccess}
+          options={{title: 'Payment Successful'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
