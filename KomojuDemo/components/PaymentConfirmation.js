@@ -1,33 +1,57 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button} from 'react-native-elements';
 import {View, Text, StyleSheet} from 'react-native';
 
 import globalStyles from './globalStyles';
+import Loading from './Loading';
+import ErrorMessage from './Error';
 
 const PaymentConfirmation = ({navigation, route}) => {
   const {total, currency, paymentId, orderId} = route.params;
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasErrored, setHasErrored] = useState(false);
+
   const confirmPayment = () => {
+    setHasErrored(false);
+    setIsLoading(true);
     const capturePaymentRequestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({paymentId}),
     };
+    const capturePaymentUrl = `https://nexus-example-provider.herokuapp.com/capture_payment/${orderId}`;
 
-    fetch(
-      `https://nexus-example-provider.herokuapp.com/capture_payment/${orderId}`,
-      capturePaymentRequestOptions,
-    )
+    fetch(capturePaymentUrl, capturePaymentRequestOptions)
       .then(response => {
-        console.log('capture payment response: ', response);
-        navigation.navigate('PaymentSuccess');
+        if (response.status > 399) {
+          throw Error(
+            `bad response from the provider, url: ${capturePaymentUrl}, response code: ${response.status}, response body: ${response.body}`,
+          );
+        } else {
+          console.log('capture payment response: ', response);
+          navigation.navigate('PaymentSuccess');
+        }
       })
-      .catch(error => console.log('capture payment error: ', error));
+      .catch(error => {
+        console.log('capture payment error: ', error);
+        setHasErrored(true);
+      });
   };
 
   const navigateToHome = () => {
     navigation.navigate('Welcome');
   };
+
+  if (hasErrored) {
+    return <ErrorMessage />;
+  }
+
+  if (isLoading) {
+    return (
+      <Loading message="Please wait while the payment is being confirmed" />
+    );
+  }
 
   return (
     <View style={globalStyles.container}>

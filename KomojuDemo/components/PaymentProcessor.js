@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Text, View, Linking} from 'react-native';
 
-import globalStyles from './globalStyles';
+import Loading from './Loading';
+import ErrorMessage from './Error';
 
 const PaymentProcessor = ({navigation, route}) => {
   const {paymentUrl} = route.params;
-  const [isError, setError] = useState(false);
+  const [hasErrored, setHasErrored] = useState(false);
 
   const fetchOptions = {
     method: 'POST',
@@ -16,6 +16,7 @@ const PaymentProcessor = ({navigation, route}) => {
   };
 
   useEffect(() => {
+    setHasErrored(false);
     fetch(paymentUrl, fetchOptions)
       .then(response => {
         if (response.status < 400) {
@@ -43,39 +44,15 @@ const PaymentProcessor = ({navigation, route}) => {
       })
       .catch(error => {
         console.log('ERROR: ', error);
-        setError(true);
+        setHasErrored(true);
       });
   }, []);
 
-  return (
-    <View style={globalStyles.container}>
-      {isError ? (
-        <View style={globalStyles.container}>
-          <Text style={globalStyles.emoji}>😿</Text>
-          <Text style={globalStyles.text}>
-            It looks like something's gone wrong. Please try again. If you're
-            still having a problem please raise an issue on the{' '}
-            <Text
-              style={{color: 'blue'}}
-              onPress={() =>
-                Linking.openURL(
-                  'https://github.com/komoju/nexus-example/issues/new',
-                )
-              }>
-              Github repository
-            </Text>
-          </Text>
-        </View>
-      ) : (
-        <View>
-          <ActivityIndicator size="large" color="#e9572b" />
-          <Text style={globalStyles.text}>
-            Please wait while the payment is being reserved
-          </Text>
-        </View>
-      )}
-    </View>
-  );
+  if (hasErrored) {
+    return <ErrorMessage />;
+  }
+
+  return <Loading message="Please wait while the payment is being reserved" />;
 };
 
 export default PaymentProcessor;
