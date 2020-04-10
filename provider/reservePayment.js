@@ -9,12 +9,12 @@ const reservePayment = (req, res) => {
   const isRequestVerified = verifyKomojuSignature(
     req.headers["komoju-signature"],
     req.body,
-    "./keys/pub.pem"
+    "./keys/komoju-pub.pem"
   );
 
-  //   if (!isRequestVerified) {
-  //     return res.status(401).send(JSON.stringify({ success: false }));
-  //   }
+  if (!isRequestVerified) {
+    return res.status(401).send(JSON.stringify({ success: false }));
+  }
 
   const { type, mode, payment } = req.body;
 
