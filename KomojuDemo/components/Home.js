@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, Linking} from 'react-native';
 import {Button} from 'react-native-elements';
 import globalStyles from './globalStyles';
 
@@ -8,8 +8,18 @@ const Home = ({navigation}) => (
     <Text style={styles.greeting}>Hi! 👋</Text>
     <Text style={styles.explainerText}>
       This is an example app to demonstrate how to integrate with the Nexus
-      APIs. You can tap on the "Scan Komoju QR Code" button below to scan the
-      example QR code to see the flow for an example payment.
+      APIs. If you go to{' '}
+      <Text
+        style={{color: 'blue'}}
+        onPress={() => Linking.openURL('https://tim-pay.herokuapp.com')}>
+        tim-pay.herokuapp.com
+      </Text>{' '}
+      you will get a QR code than can be scanned, or open the page on your
+      mobile device to see how deep linking can be set up.
+    </Text>
+    <Text style={styles.explainerText}>
+      Tap on the "Scan Komoju QR Code" button below to scan the example QR code
+      to see the flow for payment integration.
     </Text>
     <Button
       title="Scan Komoju QR Code"
