@@ -15,7 +15,7 @@ const PaymentConfirmation = ({navigation, route}) => {
     };
 
     fetch(
-      `https://nexus-example-provider.herokuapp.com/${orderId}`,
+      `https://nexus-example-provider.herokuapp.com/capture_payment/${orderId}`,
       capturePaymentRequestOptions,
     )
       .then(response => {
