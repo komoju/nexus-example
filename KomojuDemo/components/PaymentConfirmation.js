@@ -15,7 +15,7 @@ const PaymentConfirmation = ({navigation, route}) => {
     };
 
     fetch(
-      `http://degicaexample.au.ngrok.io/capture_payment/${orderId}`,
+      `https://nexus-example-provider.herokuapp.com/${orderId}`,
       capturePaymentRequestOptions,
     )
       .then(response => {
