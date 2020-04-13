@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import Loading from './Loading';
 import ErrorMessage from './Error';
 
-/* 
+/*
 The PaymentProcessor component is responsible for taking the payment URL and sending
 the reservePayment API call to Komoju. The url can come from a scanned QR code via
 QRScanner.js or from the mobile deep link, which gets routed through the App.js file.
@@ -21,13 +21,13 @@ const PaymentProcessor = ({navigation, route}) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({method: 'qr', provider: 'tim'}),
+    body: JSON.stringify({provider: 'tim'}),
   };
 
   useEffect(() => {
     setHasErrored(false);
     fetch(paymentUrl, fetchOptions)
-      .then(response => {
+      .then((response) => {
         if (response.status < 400) {
           return response.json();
         } else {
@@ -36,7 +36,7 @@ const PaymentProcessor = ({navigation, route}) => {
           );
         }
       })
-      .then(json => {
+      .then((json) => {
         const {
           payment: {total, currency, id},
         } = json;
@@ -54,14 +54,14 @@ const PaymentProcessor = ({navigation, route}) => {
           currency,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('ERROR: ', error);
         setHasErrored(true);
       });
   }, [paymentUrl]);
 
   if (hasErrored) {
-    return <ErrorMessage />;
+    return <ErrorMessage navigation={navigation} />;
   }
 
   return <Loading message="Please wait while the payment is being reserved" />;

@@ -5,7 +5,7 @@ import {useIsFocused} from '@react-navigation/native';
 
 import globalStyles from './globalStyles';
 
-const QRCodeLinksToKomojuPayments = barcodeData => {
+const QRCodeLinksToKomojuPayments = (barcodeData) => {
   const expression = new RegExp('https://komoju.com/s/p/.+');
 
   return expression.test(barcodeData);
@@ -36,7 +36,7 @@ const QRScanner = ({navigation}) => {
           buttonNegative: 'Cancel',
         }}
         captureAudio={false}
-        onBarCodeRead={barcode => {
+        onBarCodeRead={(barcode) => {
           if (isFocused) {
             if (QRCodeLinksToKomojuPayments(barcode.data)) {
               navigation.navigate('PaymentProcessor', {

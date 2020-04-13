@@ -1,9 +1,10 @@
 import React from 'react';
 import {View, Text, Linking, StyleSheet} from 'react-native';
+import {Button} from 'react-native-elements';
 
 import globalStyles from './globalStyles';
 
-const Error = () => (
+const Error = ({navigation}) => (
   <View style={globalStyles.container}>
     <Text style={globalStyles.emoji}>😿</Text>
     <Text style={globalStyles.text}>

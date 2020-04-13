@@ -6,7 +6,7 @@ import globalStyles from './globalStyles';
 import Loading from './Loading';
 import ErrorMessage from './Error';
 
-/* 
+/*
 The PaymentConfirmation component is responsible for asking for confirmation from
 the user and if they confirm, capturing the payment. The capture payment URL is a 
 direct link to the provider and doesn't need to meet any specific requirements. In
@@ -33,7 +33,7 @@ const PaymentConfirmation = ({navigation, route}) => {
     const capturePaymentUrl = `https://nexus-example-provider.herokuapp.com/capture_payment/${orderId}`;
 
     fetch(capturePaymentUrl, capturePaymentRequestOptions)
-      .then(response => {
+      .then((response) => {
         if (response.status < 400) {
           console.log('capture payment response: ', response);
           navigation.navigate('PaymentSuccess');
@@ -43,7 +43,7 @@ const PaymentConfirmation = ({navigation, route}) => {
           );
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('capture payment error: ', error);
         setHasErrored(true);
       });
@@ -54,7 +54,7 @@ const PaymentConfirmation = ({navigation, route}) => {
   };
 
   if (hasErrored) {
-    return <ErrorMessage />;
+    return <ErrorMessage navigation={navigation} />;
   }
 
   if (isLoading) {
