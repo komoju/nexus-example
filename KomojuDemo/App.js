@@ -19,6 +19,16 @@ import PaymentSuccess from './components/PaymentSuccess';
 
 const Stack = createStackNavigator();
 
+/*
+The App.js component is the root level component for this React Native app, and is
+responsible for setting up the routes between components, as well as providing deep
+link support. Any URIs that start with komoju-demo:// will be routed to this app.
+When the provider name is clicked on the Komoju website, it is directed to the
+/mobile/landing route of the provider, which redirects to the
+komoju-demo://session/<process-payment-url>. Once the route is opened in the app the
+URL is decoded and passed to the PaymentProcessor component, where the process
+payment request is made.
+*/
 const App = () => {
   // Deep linking integration taken from https://reactnavigation.org/docs/deep-linking/
   const ref = useRef();

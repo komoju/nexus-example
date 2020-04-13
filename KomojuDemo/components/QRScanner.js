@@ -11,6 +11,15 @@ const QRCodeLinksToKomojuPayments = barcodeData => {
   return expression.test(barcodeData);
 };
 
+/*
+The QRScanner component integrates with the device camera to scan the Komoju
+generated QR code. If a QR code is brought into the camera's viewfinder it will be
+checked to make sure that the URL matches the ProcessPayment API structure. If it
+does then the URL is forward to the PaymentProcessor component for the next step in
+the flow.
+
+ProcessPayment API docs: https://docs.komoju.com/en/qr/api_reference#process-payment
+*/
 const QRScanner = ({navigation}) => {
   const isFocused = useIsFocused();
   const [showAlert, updateAlertState] = useState(false);

@@ -6,6 +6,16 @@ import globalStyles from './globalStyles';
 import Loading from './Loading';
 import ErrorMessage from './Error';
 
+/* 
+The PaymentConfirmation component is responsible for asking for confirmation from
+the user and if they confirm, capturing the payment. The capture payment URL is a 
+direct link to the provider and doesn't need to meet any specific requirements. In
+this example, the request will be sent with the order ID the provider returned in
+the PaymentProcessor step, as well as the payment ID. The payment ID is required by
+the provider to notify Komoju that the payment has been successfully captured, but
+that could have been stored in a database on the provider side and doesn't need to
+be sent from the client.
+*/
 const PaymentConfirmation = ({navigation, route}) => {
   const {total, currency, paymentId, orderId} = route.params;
 
@@ -24,13 +34,13 @@ const PaymentConfirmation = ({navigation, route}) => {
 
     fetch(capturePaymentUrl, capturePaymentRequestOptions)
       .then(response => {
-        if (response.status > 399) {
+        if (response.status < 400) {
+          console.log('capture payment response: ', response);
+          navigation.navigate('PaymentSuccess');
+        } else {
           throw Error(
             `bad response from the provider, url: ${capturePaymentUrl}, response code: ${response.status}, response body: ${response.body}`,
           );
-        } else {
-          console.log('capture payment response: ', response);
-          navigation.navigate('PaymentSuccess');
         }
       })
       .catch(error => {
