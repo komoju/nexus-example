@@ -1,18 +1,32 @@
 # Komoju Nexus Example
 
-**This is still a work in progress and is not fully functioning yet**
-
 This repo serves as a demonstration of how to integrate with [Komoju's QR API](https://docs.komoju.com/en/qr/integration_guide/).
 
-## Building the APK
+The repository is broken into two main parts, the [provider](./provider) which is a NodeJS app, and the [client](./client) which is a React Native app. Both these applications follow the conventions set out for them in the [Nexus terminology guide](https://docs.komoju.com/en/qr/overview/#terminology)
 
-To build the APK you will need to run the following command from the root of the repository:
+## Running the app
+
+If you have an Android device, you can load the [APK](./app-release.apk) onto it to try it, otherwise you can set up your computer to run it in a simulator.
+
+### Using a simulator
+
+Follow the instructions in the [React-Native docs](https://reactnative.dev/docs/environment-setup) on setting up your development environment. Once configured you can run the following command to run the app on a simulator. Please note that the QR code scanning is not functional in either simulator.
+
+```bash
+$ cd client
+$ npm run ios # to start the app in an iOS simulator
+$ npm run android # to start the app in an Android simulator
+```
+
+## Development
+
+The following section contain info on how to develop and contribute to the example app.
+
+### Building the APK
+
+To ensure that the APK in the github repo reflects the latest changes, you will need to re-build the APK after changes have been made to the `client`. To build the APK you will need to run the following command from the root of the repository:
 ```
 scripts/build-apk.sh
 ```
 
-You'll then find the APK at top level of the repository, as `app-release.apk`
-
-## Development
-
-Follow the instructions in the [React-Native docs](https://reactnative.dev/docs/environment-setup) on setting up your development environment. Once configured you can run `npm run ios` to start the app for iOS devices or `npm run android` to start the app for Android devices.
+This will then find the APK at top level of the repository, as `app-release.apk`
