@@ -3,7 +3,7 @@ import {StyleSheet, View, Text, Linking} from 'react-native';
 import {Button} from 'react-native-elements';
 import globalStyles from './globalStyles';
 
-const Home = ({navigation}) => (
+const Welcome = ({navigation}) => (
   <View style={styles.container}>
     <Text style={styles.greeting}>Hi! 👋</Text>
     <Text style={styles.explainerText}>
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Welcome;

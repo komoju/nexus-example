@@ -12,7 +12,7 @@ import {NavigationContainer, useLinking} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import QRScanner from './components/QRScanner';
-import Home from './components/Home';
+import Welcome from './components/Welcome';
 import PaymentProcessor from './components/PaymentProcessor';
 import PaymentConfirmation from './components/PaymentConfirmation';
 import PaymentSuccess from './components/PaymentSuccess';
@@ -67,7 +67,7 @@ const App = () => {
   return (
     <NavigationContainer initialState={initialState} ref={ref}>
       <Stack.Navigator>
-        <Stack.Screen name="Welcome" component={Home} />
+        <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen
           name="Scanner"
           component={QRScanner}
