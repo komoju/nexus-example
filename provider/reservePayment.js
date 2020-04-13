@@ -8,7 +8,7 @@ the payment or not. How this is done is entirely up to each system, but if the
 payment was successfully reserved then the endpoint must return a 200 OK response, 
 with a JSON body with "success": "true" set.
 Anything returned in the body of the response will be automatically forwarded to the
-client in the payment.payment_details.authorization_response_text JSON object.
+client in the payment.payment_details.authorization_response_text JSON string.
 Komoju has several error conditions that you can return depending on whether the
 scenario matches, otherwise returning a simple 400 response will be sufficient.
 Docs: https://docs.komoju.com/en/qr/gateway_integration/#reserve-payment
