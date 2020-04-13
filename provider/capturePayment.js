@@ -2,11 +2,18 @@ const axios = require("axios");
 
 const { generateKomojuProviderSignature } = require("./verifier");
 
+/* 
+This is the endpoint the client directly talks to the provider with to ensure the
+payment is correctly captured and confirmed. What this does is up to the individual
+application, but once payment is successfully captured then the komoju callback URL
+must be called with the body of {"type": "payment.captured", "payment_id": id}. In 
+this example app we're getting the payment ID from the client application as it 
+doesn't have a database, but the value can be stored on the initial reserve payment
+if preferred.
+Docs: https://docs.komoju.com/en/qr/gateway_integration/#capture-payment
+*/
 const capturePayment = (req, res) => {
-  const { orderId } = req.params;
   const { paymentId } = req.body;
-  console.log("orderId", orderId);
-  console.log("paymentId", paymentId);
 
   if (paymentId == null || paymentId == "") {
     return res
@@ -33,9 +40,6 @@ const capturePayment = (req, res) => {
     })
     .then(response => console.log("callback response: ", response.status))
     .catch(error => console.log("callback error:", error));
-
-  //  basic regex check for UUID structure
-  // return 200 OK or 400 bad request
 
   return res.end();
 };
