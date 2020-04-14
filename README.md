@@ -6,7 +6,9 @@ The repository is broken into two main parts, the [provider](./provider) which i
 
 ## Running the app
 
-If you have an Android device, you can load the [APK](./app-release.apk) onto it to try it, otherwise you can set up your computer to run it in a simulator.
+You can find the [installable APK here](./app-release.apk) in the github repository. (Click view raw to download the file)
+
+If you have an Android device, you can load the APK onto it to try it, otherwise you can set up your computer to run it in a simulator.
 
 ### Using a simulator
 
@@ -29,4 +31,7 @@ To ensure that the APK in the github repo reflects the latest changes, you will 
 scripts/build-apk.sh
 ```
 
-This will then find the APK at top level of the repository, as `app-release.apk`
+The APK will then be updated at top level of the repository, as `app-release.apk`
+
+If needed the password for the keystore is `komoju-demo`
+
