@@ -6,16 +6,18 @@ import globalStyles from './globalStyles';
 
 const Error = ({navigation}) => (
   <View style={globalStyles.container}>
-    <Text style={globalStyles.emoji}>😿</Text>
-    <Text style={globalStyles.text}>
-      It looks like something's gone wrong. Please try again. If you're still
-      having a problem please raise an issue on the{' '}
-      <Text
-        style={{color: 'blue'}}
-        onPress={() =>
-          Linking.openURL('https://github.com/komoju/nexus-example/issues/new')
-        }>
-        Github repository
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.emoji}>😿</Text>
+      <Text style={globalStyles.text}>
+        It looks like something's gone wrong. Please try again. If you're still
+        having a problem please raise an issue on the{' '}
+        <Text
+          style={{color: 'blue'}}
+          onPress={() =>
+            Linking.openURL('https://github.com/komoju/nexus-example/issues/new')
+          }>
+          Github repository
+        </Text>
       </Text>
       <Button
         buttonStyle={styles.button}
@@ -23,7 +25,7 @@ const Error = ({navigation}) => (
         titleStyle={{fontSize: 24}}
         onPress={() => navigation.navigate('Welcome')}
       />
-    </Text>
+    </View>
   </View>
 );
 
