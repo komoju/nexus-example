@@ -17,13 +17,13 @@ const Error = ({navigation}) => (
         }>
         Github repository
       </Text>
-      <Button
-        buttonStyle={styles.button}
-        title="Go Home"
-        titleStyle={{fontSize: 24}}
-        onPress={() => navigation.navigate('Welcome')}
-      />
     </Text>
+    <Button
+      buttonStyle={styles.button}
+      title="Go Home"
+      titleStyle={{fontSize: 24}}
+      onPress={() => navigation.navigate('Welcome')}
+    />
   </View>
 );
 
