@@ -25,7 +25,7 @@ responsible for setting up the routes between components, as well as providing d
 link support. Any URIs that start with komoju-demo:// will be routed to this app.
 When the provider name is clicked on the Komoju website, it is directed to the
 /mobile/landing route of the provider, which redirects to the
-komoju-demo://session/<process-payment-url>. Once the route is opened in the app the
+komoju-demo://nexus_link/<process-payment-url>. Once the route is opened in the app the
 URL is decoded and passed to the PaymentProcessor component, where the process
 payment request is made.
 */
@@ -37,7 +37,7 @@ const App = () => {
     prefixes: ['komoju-demo://'],
     config: {
       PaymentProcessor: {
-        path: 'session/:paymentUrl',
+        path: 'nexus_link/:paymentUrl',
         parse: {
           paymentUrl: encodedUrl => decodeURIComponent(encodedUrl),
         },
