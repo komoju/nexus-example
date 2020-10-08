@@ -37,7 +37,7 @@ Example URL: /mobile/landing?nexus_link=https://komoju.com/s/p/6l487urgjq4369szt
 app.get("/mobile/landing", (req, res) => {
   const { nexus_link } = req.query;
   const encodedNexusLink = encodeURIComponent(nexus_link);
-  const appLink = `komoju-demo://session/${encodedNexusLink}`;
+  const appLink = `komoju-demo://nexus_link/${encodedNexusLink}`;
 
   console.log("redirecting to deep link:", appLink);
   return res.redirect(appLink);
