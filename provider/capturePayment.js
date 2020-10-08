@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const { generateKomojuProviderSignature } = require("./verifier");
+const { generateNexusProviderSignature } = require("./verifier");
 
 /* 
 This is the endpoint the client directly talks to the provider with to ensure the
@@ -26,7 +26,7 @@ const capturePayment = (req, res) => {
     payment_id: paymentId
   });
 
-  providerSignature = generateKomojuProviderSignature(
+  providerSignature = generateNexusProviderSignature(
     "./keys/private.pem",
     body
   );
@@ -35,7 +35,7 @@ const capturePayment = (req, res) => {
     .post("https://komoju.com/l/callbacks/tim", body, {
       headers: {
         "Content-Type": "application/json",
-        "komoju-provider-signature": providerSignature
+        "nexus-provider-signature": providerSignature
       }
     })
     .then(response => console.log("callback response: ", response.status))

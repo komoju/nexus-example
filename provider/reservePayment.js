@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 
-const { verifyKomojuSignature } = require("./verifier");
+const { verifyNexusSignature } = require("./verifier");
 
 /* 
 The reservePayment endpoint is responsible for determining whether the user can make
@@ -15,8 +15,8 @@ Docs: https://docs.komoju.com/en/qr/gateway_integration/#reserve-payment
 Error docs: https://docs.komoju.com/en/qr/gateway_integration/#error-response
 */
 const reservePayment = (req, res) => {
-  const isRequestVerified = verifyKomojuSignature(
-    req.headers["komoju-signature"],
+  const isRequestVerified = verifyNexusSignature(
+    req.headers["nexus-signature"],
     req.body,
     "./keys/komoju-pub.pem"
   );
