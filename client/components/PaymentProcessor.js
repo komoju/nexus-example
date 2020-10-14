@@ -34,7 +34,7 @@ const PaymentProcessor = ({navigation, route}) => {
 
   useEffect(() => {
     setHasErrored(false);
-    fetch(paymentUrl, PreFetchOptions)
+    fetch(paymentUrl, preFetchOptions)
       .then((preResponse) => {
         if (preResponse.headers.map['content-type'] !== 'application/vnd.nexus-link+json') {
           throw Error(
