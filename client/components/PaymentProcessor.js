@@ -16,7 +16,7 @@ const PaymentProcessor = ({navigation, route}) => {
   const {paymentUrl} = route.params;
   const [hasErrored, setHasErrored] = useState(false);
 
-  const PreFetchOptions = {
+const preFetchOptions = {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
