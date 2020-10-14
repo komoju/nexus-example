@@ -32,12 +32,12 @@ session query string. This method is responsible for redirecting the mobile devi
 to the client app. In this example we're encoding the session URL and attaching it
 to deep link, so the client app will be able to read the URL and make a request to
 process the payment.
-Example URL: /mobile/landing?session=https://komoju.com/s/p/6l487urgjq4369szt578f07uq
+Example URL: /mobile/landing?nexus_link=https://komoju.com/s/p/6l487urgjq4369szt578f07uq
  */
 app.get("/mobile/landing", (req, res) => {
-  const { session } = req.query;
-  const encodedSessionUrl = encodeURIComponent(session);
-  const appLink = `komoju-demo://session/${encodedSessionUrl}`;
+  const { nexus_link } = req.query;
+  const encodedNexusLink = encodeURIComponent(nexus_link);
+  const appLink = `komoju-demo://nexus_link/${encodedNexusLink}`;
 
   console.log("redirecting to deep link:", appLink);
   return res.redirect(appLink);

@@ -16,6 +16,14 @@ const PaymentProcessor = ({navigation, route}) => {
   const {paymentUrl} = route.params;
   const [hasErrored, setHasErrored] = useState(false);
 
+  const preFetchOptions = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+  };
+
   const fetchOptions = {
     method: 'POST',
     headers: {
@@ -26,33 +34,41 @@ const PaymentProcessor = ({navigation, route}) => {
 
   useEffect(() => {
     setHasErrored(false);
-    fetch(paymentUrl, fetchOptions)
-      .then((response) => {
-        if (response.status < 400) {
-          return response.json();
-        } else {
+    fetch(paymentUrl, preFetchOptions)
+      .then((preResponse) => {
+        if (preResponse.headers.map['content-type'] !== 'application/vnd.nexus-link+json') {
           throw Error(
-            `bad response from Komoju, url: ${paymentUrl}, response code: ${response.status}, response body: ${response.body}`,
+            `Valid endpoints should return "application/vnd.nexus-link+json", url: ${paymentUrl}, response code: ${response.status}, response body: ${response.body}`,
           );
         }
-      })
-      .then((json) => {
-        const {
-          payment: {total, currency, id},
-        } = json;
-        // any information returned from the provider will be inserted into Komoju's
-        // response as a JSON string at
-        // payment.payment_details.authorization_response_text
-        const authorizationResponseText = JSON.parse(
-          json.payment.payment_details.authorization_response_text,
-        );
-
-        navigation.navigate('PaymentConfirmation', {
-          orderId: authorizationResponseText.orderId,
-          paymentId: id,
-          total,
-          currency,
-        });
+        fetch(paymentUrl, fetchOptions)
+          .then((response) => {
+            if (response.status < 400) {
+              return response.json();
+            } else {
+              throw Error(
+                `bad response from Komoju, url: ${paymentUrl}, response code: ${response.status}, response body: ${response.body}`,
+              );
+            }
+          })
+          .then((json) => {
+            const {
+              payment: {total, currency, id},
+            } = json;
+            // any information returned from the provider will be inserted into Komoju's
+            // response as a JSON string at
+            // payment.payment_details.authorization_response_text
+            const authorizationResponseText = JSON.parse(
+              json.payment.payment_details.authorization_response_text,
+            );
+    
+            navigation.navigate('PaymentConfirmation', {
+              orderId: authorizationResponseText.orderId,
+              paymentId: id,
+              total,
+              currency,
+            });
+          })
       })
       .catch((error) => {
         console.log('ERROR: ', error);
