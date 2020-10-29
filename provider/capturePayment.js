@@ -13,12 +13,15 @@ if preferred.
 Docs: https://docs.komoju.com/en/qr/gateway_integration/#capture-payment
 */
 const capturePayment = (req, res) => {
-  const { paymentId } = req.body;
+  let { paymentId, komojuEndpoint } = req.body;
 
   if (paymentId == null || paymentId == "") {
     return res
       .status(400)
       .send({ error: "paymentId is missing from request body" });
+  }
+  if (komojuEndpoint == null || komojuEndpoint == "") {
+    komojuEndpoint = "https://komoju.com"
   }
 
   const body = JSON.stringify({
@@ -32,7 +35,7 @@ const capturePayment = (req, res) => {
   );
 
   axios
-    .post("https://komoju.com/l/callbacks/tim", body, {
+    .post(`${komojuEndpoint}/l/callbacks/tim`, body, {
       headers: {
         "Content-Type": "application/json",
         "nexus-provider-signature": providerSignature

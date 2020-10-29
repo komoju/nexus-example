@@ -17,7 +17,7 @@ that could have been stored in a database on the provider side and doesn't need 
 be sent from the client.
 */
 const PaymentConfirmation = ({navigation, route}) => {
-  const {total, currency, paymentId, orderId} = route.params;
+  const {total, currency, paymentId, orderId, komojuEndpoint} = route.params;
 
   const [isLoading, setIsLoading] = useState(false);
   const [hasErrored, setHasErrored] = useState(false);

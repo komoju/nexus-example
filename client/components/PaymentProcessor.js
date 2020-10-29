@@ -61,12 +61,15 @@ const PaymentProcessor = ({navigation, route}) => {
             const authorizationResponseText = JSON.parse(
               json.payment.payment_details.authorization_response_text,
             );
+
+            const komojuEndpoint = `https://${paymentUrl.split('/')[2]}`
     
             navigation.navigate('PaymentConfirmation', {
               orderId: authorizationResponseText.orderId,
               paymentId: id,
               total,
               currency,
+              komojuEndpoint
             });
           })
       })
