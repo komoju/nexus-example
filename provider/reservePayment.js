@@ -29,35 +29,33 @@ const reservePayment = (req, res) => {
   const { type, mode, payment } = req.body;
 
   if (type === "payment.create") {
-    if (mode === "live") {
-      if (payment.amount > 2000) {
-        // for our example app we're going to say that anything greater than
-        // 2000 KRW will be too much for our user
-        res.setHeader("Content-Type", "application/json");
-        return res.status(400).send(
-          JSON.stringify({
-            success: false,
-            error: {
-              type: "amount_exceeds_limit",
-              message: "User does not have sufficient funds"
-            }
-          })
-        );
-      } else {
-        // in a real app this section would probably be reserving the payment
-        // and returning the ID assigned to the order in the database
-        const pretendOrderId = uuidv4();
+    if (payment.amount > 20000) {
+      // for our example app we're going to say that anything greater than
+      // 20000 KRW will be too much for our user
+      res.setHeader("Content-Type", "application/json");
+      return res.status(400).send(
+        JSON.stringify({
+          success: false,
+          error: {
+            type: "amount_exceeds_limit",
+            message: "User does not have sufficient funds"
+          }
+        })
+      );
+    } else {
+      // in a real app this section would probably be reserving the payment
+      // and returning the ID assigned to the order in the database
+      const pretendOrderId = uuidv4();
 
-        res.setHeader("Content-Type", "application/json");
-        return res
-          .status(200)
-          .send(JSON.stringify({ success: true, orderId: pretendOrderId }));
-      }
+      res.setHeader("Content-Type", "application/json");
+      return res
+        .status(200)
+        .send(JSON.stringify({ success: true, orderId: pretendOrderId }));
     }
   }
 
-  // if it doesn't match the correct type and it's not in live mode let's just say
-  // that the system is under maintenance
+  // if it doesn't match the correct type, let's just say that the system is
+  // under maintenance
   res.setHeader("Content-Type", "application/json");
   return res.status(400).send(
     JSON.stringify({
