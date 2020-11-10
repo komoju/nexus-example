@@ -15,15 +15,14 @@ Docs: https://docs.komoju.com/en/qr/gateway_integration/#reserve-payment
 Error docs: https://docs.komoju.com/en/qr/gateway_integration/#error-response
 */
 const reservePayment = (req, res) => {
-  const isRequestVerified = verifyNexusSignature(
+  // we'll report back to the client whether or not the reserve request was verified
+  // under the KOMOJU public key. a real implementation would likely return a failure
+  // response when verification fails.
+  const requestIsVerified = verifyNexusSignature(
     req.headers["nexus-signature"],
     req.body,
     "./keys/komoju-pub.pem"
   );
-
-  if (!isRequestVerified) {
-    return res.status(401).send(JSON.stringify({ success: false }));
-  }
 
   // request body structure: https://docs.komoju.com/en/qr/api_reference/#session-object
   const { type, mode, payment } = req.body;
@@ -31,7 +30,7 @@ const reservePayment = (req, res) => {
   if (type === "payment.create") {
     if (payment.amount > 20000) {
       // for our example app we're going to say that anything greater than
-      // 20000 KRW will be too much for our user
+      // 20000 will be too much for our user
       res.setHeader("Content-Type", "application/json");
       return res.status(400).send(
         JSON.stringify({
@@ -39,7 +38,8 @@ const reservePayment = (req, res) => {
           error: {
             type: "amount_exceeds_limit",
             message: "User does not have sufficient funds"
-          }
+          },
+          authentic: requestIsVerified
         })
       );
     } else {
@@ -50,7 +50,11 @@ const reservePayment = (req, res) => {
       res.setHeader("Content-Type", "application/json");
       return res
         .status(200)
-        .send(JSON.stringify({ success: true, orderId: pretendOrderId }));
+        .send(JSON.stringify({
+          success: true,
+          orderId: pretendOrderId,
+          authentic: requestIsVerified
+        }));
     }
   }
 
@@ -60,7 +64,11 @@ const reservePayment = (req, res) => {
   return res.status(400).send(
     JSON.stringify({
       success: false,
-      error: { type: "under_maintenance", message: "still being built" }
+      error: {
+        type: "under_maintenance",
+        message: "still being built",
+        authentic: requestIsVerified
+      }
     })
   );
 };

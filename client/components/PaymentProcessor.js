@@ -41,37 +41,38 @@ const PaymentProcessor = ({navigation, route}) => {
             `Valid endpoints should return "application/vnd.nexus-link+json", url: ${paymentUrl}, response code: ${response.status}, response body: ${response.body}`,
           );
         }
-        fetch(paymentUrl, fetchOptions)
-          .then((response) => {
-            if (response.status < 400) {
-              return response.json();
-            } else {
-              throw Error(
-                `bad response from Komoju, url: ${paymentUrl}, response code: ${response.status}, response body: ${response.body}`,
-              );
-            }
-          })
-          .then((json) => {
-            const {
-              payment: {total, currency, id},
-            } = json;
-            // any information returned from the provider will be inserted into Komoju's
-            // response as a JSON string at
-            // payment.payment_details.authorization_response_text
-            const authorizationResponseText = JSON.parse(
-              json.payment.payment_details.authorization_response_text,
-            );
+        return fetch(paymentUrl, fetchOptions)
+      })
+      .then((response) => {
+        if (response.status < 400) {
+          return response.json();
+        } else {
+          throw Error(
+            `bad response from Komoju, url: ${paymentUrl}, response code: ${response.status}, response body: ${response.body}`,
+          );
+        }
+      })
+      .then((json) => {
+        const {
+          payment: {amount, currency, id},
+        } = json;
+        // any information returned from the provider will be inserted into Komoju's
+        // response as a JSON string at
+        // payment.payment_details.authorization_response_text
+        const authorizationResponseText = JSON.parse(
+          json.payment.payment_details.authorization_response_text,
+        );
 
-            const komojuEndpoint = `https://${paymentUrl.split('/')[2]}`
-    
-            navigation.navigate('PaymentConfirmation', {
-              orderId: authorizationResponseText.orderId,
-              paymentId: id,
-              total,
-              currency,
-              komojuEndpoint
-            });
-          })
+        const komojuEndpoint = `https://${paymentUrl.split('/')[2]}`
+
+        navigation.navigate('PaymentConfirmation', {
+          orderId: authorizationResponseText.orderId,
+          authentic: authorizationResponseText.authentic,
+          paymentId: id,
+          amount,
+          currency,
+          komojuEndpoint
+        });
       })
       .catch((error) => {
         console.log('ERROR: ', error);

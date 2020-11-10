@@ -34,17 +34,21 @@ const capturePayment = (req, res) => {
     body
   );
 
-  axios
+  return axios
     .post(`${komojuEndpoint}/l/callbacks/tim`, body, {
       headers: {
         "Content-Type": "application/json",
         "nexus-provider-signature": providerSignature
       }
     })
-    .then(response => console.log("callback response: ", response.status))
-    .catch(error => console.log("callback error:", error));
-
-  return res.end();
+    .then(response => {
+      console.log("callback response: ", response.status)
+      return res.end()
+    })
+    .catch(error => {
+      console.log("callback error:", error)
+      return res.status(400).send({ error })
+    });
 };
 
 module.exports = capturePayment;

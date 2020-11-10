@@ -5,12 +5,6 @@ import {useIsFocused} from '@react-navigation/native';
 
 import globalStyles from './globalStyles';
 
-const QRCodeLinksToKomojuPayments = (barcodeData) => {
-  const expression = new RegExp('https://komoju.com/s/p/.+');
-
-  return expression.test(barcodeData);
-};
-
 /*
 The QRScanner component integrates with the device camera to scan the Komoju
 generated QR code. If a QR code is brought into the camera's viewfinder it will be
@@ -37,21 +31,11 @@ const QRScanner = ({navigation}) => {
         }}
         captureAudio={false}
         onBarCodeRead={(barcode) => {
-          if (isFocused) {
-            if (QRCodeLinksToKomojuPayments(barcode.data)) {
-              navigation.navigate('PaymentProcessor', {
-                paymentUrl: barcode.data,
-              });
-            } else {
-              updateAlertState(true);
-              !showAlert &&
-                Alert.alert(
-                  'Invalid QR code',
-                  'For this demo app the QR code must have been generated from "https://tim-pay.herokuapp.com/"',
-                  [{text: 'OK', onPress: () => updateAlertState(false)}],
-                );
-            }
-          }
+          if (!isFocused) return;
+
+          navigation.navigate('PaymentProcessor', {
+            paymentUrl: barcode.data,
+          });
         }}
         barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}>
         {({status}) => {
