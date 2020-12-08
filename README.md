@@ -1,8 +1,8 @@
 # Komoju Nexus Example
 
-This repo serves as a demonstration of how to integrate with [Komoju's QR API](https://docs.komoju.com/en/qr/integration_guide/).
+This repo serves as a demonstration of how to integrate with [Komoju Nexus API](https://docs.komoju.com/en/nexus/for_payment_method_providers).
 
-The repository is broken into two main parts, the [provider](./provider) which is a NodeJS app, and the [client](./client) which is a React Native app. Both these applications follow the conventions set out for them in the [Nexus terminology guide](https://docs.komoju.com/en/qr/overview/#terminology)
+The repository is broken into two main parts, the [provider](./provider) which is a NodeJS app, and the [client](./client) which is a React Native app. Both these applications follow the conventions set out for them in the [Nexus terminology guide](https://docs.komoju.com/en/nexus/for_payment_method_providers).
 
 ## Running the app
 
